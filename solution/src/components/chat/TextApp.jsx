@@ -8,6 +8,7 @@ import MessageType from './messages/MessageType';
 import createChatAgent from '../../agent/ChatAgent';
 import AudioRecorder from '../AudioRecorder';
 import AIEmoteType from './messages/AIEmoteType';
+import { logout } from '../../agent/Util';
 
 const LOGOUT_ON_HOTRELOAD = true;
 
@@ -36,24 +37,7 @@ function TextApp() {
 
     useEffect(() => {
         if (LOGOUT_ON_HOTRELOAD) {
-            fetch("https://cs571.org/api/s24/hw11/whoami", {
-                credentials: "include",
-                headers: {
-                    "X-CS571-ID": CS571.getBadgerId()
-                }
-            })
-            .then(res => res.json())
-            .then(body => {
-                if (body.isLoggedIn) {
-                    fetch("https://cs571.org/api/s24/hw11/logout", {
-                        method: "POST",
-                        credentials: "include",
-                        headers: {
-                            "X-CS571-ID": CS571.getBadgerId()
-                        }
-                    })
-                }
-            })
+            logout();
         }
     }, [])
 

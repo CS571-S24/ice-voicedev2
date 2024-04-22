@@ -1,3 +1,4 @@
+
 const ofRandom = (arr) => {
     return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -13,7 +14,18 @@ const isLoggedIn = async () => {
     return body.isLoggedIn;
 }
 
+const logout = async () => {
+    await fetch("https://cs571.org/api/s24/ice/logout", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "X-CS571-ID": CS571.getBadgerId()
+        }
+    })
+}
+
 export {
     ofRandom,
-    isLoggedIn
+    isLoggedIn,
+    logout
 }
