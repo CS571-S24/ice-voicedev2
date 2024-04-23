@@ -17,8 +17,8 @@ const createCommentSubAgent = (end) => {
             ])
         } else {
             return end(ofRandom([
-                "You are already logged in, try logging out first.",
-                "You are already signed in, try signing out first."
+                "You must be signed in to create a post.",
+                "Please sign in before creating a post."
             ]))
             
         }
