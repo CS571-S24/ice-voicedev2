@@ -2,6 +2,8 @@ import { isLoggedIn, ofRandom } from "../Util"
 
 const createCommentSubAgent = (end) => {
 
+    const CS571_WITAI_ACCESS_TOKEN = ""; // Put your CLIENT access token here.
+
     let stage;
 
     let comment, confirm;
@@ -40,7 +42,13 @@ const createCommentSubAgent = (end) => {
 
     const handleFollowupConfirm = async (prompt) => {
         confirm = prompt;
-        if (confirm.toLowerCase().includes("yes")) {
+        const resp = await fetch(`https://api.wit.ai/message?q=${encodeURIComponent(prompt)}`, {
+            headers: {
+                "Authorization": `Bearer ${CS571_WITAI_ACCESS_TOKEN}`
+            }
+        })
+        const data = await resp.json();
+        if (data.intents.length > 0 && data.intents[0].name === 'wit$confirmation') {
             await fetch("https://cs571.org/api/s24/ice/comments", {
                 method: "POST",
                 credentials: "include",
